@@ -2,7 +2,7 @@
 
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 
 
@@ -34,7 +34,7 @@ to insert a new data into mongoDB follow those steps
 // - step1 : Interface
 // creating interface
 
-interface IStudents {
+interface StudentsInterface {
     id: string;
     role: "student";
     password: string;
@@ -62,8 +62,8 @@ interface IStudents {
 
 // - step2 : Schema
 // creating Schema using Interface
-const studentSchema = new Schema<IStudents>({
-   
+const studentSchema = new Schema<StudentsInterface>({
+    
     id: {
         type: String,
         required: true,
@@ -137,7 +137,41 @@ const studentSchema = new Schema<IStudents>({
 });
 
 
+// - step3 : Model
+// creating a Model 
+// create an instance from the model
+const StudentModel = model<StudentsInterface>('StudentModel', studentSchema);
 
+
+const createUserToDB =async()=>{
+
+    const student = new StudentModel({
+        id: 'a1',
+        role: "student",
+        password: '1a',
+        name: {
+            firstName: 'saif',
+            middleName: 'rahman',
+            lastName: 'mamun',
+        },
+        dateOfBirth: '5sept',
+        gender: "male" ,
+        classN: 12,
+        roll: 13,
+        institution: {
+            school: 'ak',
+            collage: 'doniya',
+        },
+        group: 'science',
+        email: 'saif@gmail.com',
+        contactNo: '013131313131',
+        emergencyContactNo: '012334567890',
+        presentAddress: 'n.gong',
+        permanentAddress: 'same',
+    });
+    await student.save();
+}
+createUserToDB()
 
 
 export default app
