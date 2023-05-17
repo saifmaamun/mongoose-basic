@@ -16,6 +16,11 @@ export const getStudentsFromDB = async ():Promise<StudentsInterface[]>=>{
     return students;
 }
 
+export const getStudentByIdFromDB=async(payload:string | null):Promise<StudentsInterface | null>=>{
+    const student = await StudentModel.findOne({id:payload},{name:1, classN:1, group:1});   
+    return student    //id:payload must be in object format
+}
+
 
 
 

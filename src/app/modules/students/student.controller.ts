@@ -1,5 +1,5 @@
 import {  NextFunction, Request, Response } from 'express';
-import { createStudentToDB, getStudentsFromDB } from './student.service';
+import { createStudentToDB, getStudentByIdFromDB, getStudentsFromDB } from './student.service';
 
 
 
@@ -13,6 +13,15 @@ export const getStudents =async(req:Request, res:Response, next: NextFunction)=>
     })
 }
 
+// get students from DB by id
+export const getStudentByID = async(req:Request,res:Response, next: NextFunction)=>{
+    const {id} = req.params;
+    const student = await getStudentByIdFromDB(id);
+    res.status(200).json({
+        status: 'getting students by id',
+        data: student,
+    })
+}
 
 
 // creating students and posting them to database
