@@ -1,10 +1,11 @@
 import express from 'express';
-import { createStudent } from './student.controller';
+import { createStudent, getStudents } from './student.controller';
 const router = express.Router();
 
 
 // api  
-router.get('/', createStudent);
+router.get('/', getStudents);
+router.post('/create-student', createStudent);
 
 
 

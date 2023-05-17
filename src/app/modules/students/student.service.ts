@@ -1,11 +1,33 @@
+import { StudentsInterface } from "./student.interface";
 import StudentModel from "./student.model";
 
 
 // query
 // query on model
-export const createStudentToDB =async()=>{
+export const createStudentToDB =async(payload:StudentsInterface):Promise<StudentsInterface>=>{
 
-    const student = new StudentModel({
+    const student = new StudentModel(payload);
+    await student.save();
+    return student;
+}
+
+export const getStudentsFromDB = async ():Promise<StudentsInterface[]>=>{
+    const students = await StudentModel.find();
+    return students;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+{
         id: 'd1',
         role: "teacher",
         password: 'teacher',
@@ -28,7 +50,5 @@ export const createStudentToDB =async()=>{
         emergencyContactNo: '012334567890',
         presentAddress: 'n.gong',
         permanentAddress: 'same',
-    });
-    await student.save();
-    return student;
-}
+    }
+*/
