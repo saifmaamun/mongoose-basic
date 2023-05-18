@@ -1,13 +1,17 @@
-import { Schema, model } from "mongoose";
-import { StudentsInterface } from "./student.interface";
+import { Model, Schema, model } from "mongoose";
+import { StudentsInterfaceMethods, StudentsInterface } from "./student.interface";
 
+
+// custom instance method model creation
+// Create a new Model type that knows about IUserMethods...
+type StudentMethodModel = Model<StudentsInterface, {}, StudentsInterfaceMethods>;
 
 
 // - step2 : Schema
 
 
 // creating Schema using Interface
-const studentSchema = new Schema<StudentsInterface>({
+const studentSchema = new Schema<StudentsInterface,StudentMethodModel,StudentsInterfaceMethods>({
     
     id: {
         type: String,
@@ -82,10 +86,24 @@ const studentSchema = new Schema<StudentsInterface>({
 });
 
 
+// custom instance method model creation
+// Create a new Model type that knows about IUserMethods...
+// declare the method
+studentSchema.method('fullName', function fullName() {
+    return this.name.firstName + ' ' + this.name.lastName;
+  });
+
+
+
+
 // - step3 : Model
 // creating a Model 
 // create an instance from the model
-const StudentModel = model<StudentsInterface>('StudentModel', studentSchema);
+const StudentModel = model<StudentsInterface,StudentMethodModel>('StudentModel', studentSchema);
+
+
+
+
 
 
 export default StudentModel;

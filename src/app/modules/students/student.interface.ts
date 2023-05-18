@@ -25,3 +25,9 @@ export interface StudentsInterface {
     presentAddress: string;
     permanentAddress: string;
 }
+
+
+// custom interface methods
+export interface StudentsInterfaceMethods {
+    fullName(): string;
+  }

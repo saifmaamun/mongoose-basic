@@ -8,6 +8,8 @@ export const createStudentToDB =async(payload:StudentsInterface):Promise<Student
 
     const student = new StudentModel(payload);
     await student.save();
+    // custom instance method
+    console.log(student.fullName());
     return student;
 }
 
@@ -17,7 +19,7 @@ export const getStudentsFromDB = async ():Promise<StudentsInterface[]>=>{
 }
 
 export const getStudentByIdFromDB=async(payload:string | null):Promise<StudentsInterface | null>=>{
-    const student = await StudentModel.findOne({id:payload},{name:1, classN:1, group:1});   
+    const student = await StudentModel.findOne({id:payload});   
     return student    //id:payload must be in object format
 }
 
