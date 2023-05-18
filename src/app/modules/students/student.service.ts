@@ -23,6 +23,11 @@ export const getStudentByIdFromDB=async(payload:string | null):Promise<StudentsI
     return student    //id:payload must be in object format
 }
 
+export const getTeachersFromDB = async ()=>{
+    const teachers = await StudentModel.getTeachers();
+    return teachers;
+}
+
 
 
 

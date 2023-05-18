@@ -1,6 +1,8 @@
 // - step1 : Interface
 // creating interface
 
+import { HydratedDocument, Model } from "mongoose";
+
 export interface StudentsInterface {
     id: string;
     role: "student";
@@ -30,4 +32,9 @@ export interface StudentsInterface {
 // custom interface methods
 export interface StudentsInterfaceMethods {
     fullName(): string;
+  }
+
+// custom static methods
+export interface StudentsStaticMethodsModel extends Model<StudentsInterface, {}, StudentsInterfaceMethods> {
+    getTeachers(): Promise<HydratedDocument<StudentsInterface, StudentsInterfaceMethods>>;
   }

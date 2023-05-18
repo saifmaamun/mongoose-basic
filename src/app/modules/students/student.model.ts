@@ -1,17 +1,17 @@
 import { Model, Schema, model } from "mongoose";
-import { StudentsInterfaceMethods, StudentsInterface } from "./student.interface";
+import { StudentsInterfaceMethods, StudentsInterface, StudentsStaticMethodsModel } from "./student.interface";
 
 
 // custom instance method model creation
 // Create a new Model type that knows about IUserMethods...
-type StudentMethodModel = Model<StudentsInterface, {}, StudentsInterfaceMethods>;
+// type StudentMethodModel = Model<StudentsInterface, {}, StudentsInterfaceMethods>;
 
 
 // - step2 : Schema
 
 
 // creating Schema using Interface
-const studentSchema = new Schema<StudentsInterface,StudentMethodModel,StudentsInterfaceMethods>({
+const studentSchema = new Schema<StudentsInterface,StudentsStaticMethodsModel,StudentsInterfaceMethods>({
     
     id: {
         type: String,
@@ -94,12 +94,19 @@ studentSchema.method('fullName', function fullName() {
   });
 
 
+// custom static method model creation
+// declare the method
+studentSchema.static('getTeachers', async function getTeachers() {
+    const teachers = await this.find({role: 'teacher'});
+    return teachers;
+  });
+
 
 
 // - step3 : Model
 // creating a Model 
 // create an instance from the model
-const StudentModel = model<StudentsInterface,StudentMethodModel>('StudentModel', studentSchema);
+const StudentModel = model<StudentsInterface,StudentsStaticMethodsModel>('StudentModel', studentSchema);
 
 
 
